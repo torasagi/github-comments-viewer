@@ -1,0 +1,125 @@
+body {
+  padding-bottom: 20px;
+  color: #333;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+}
+
+div,
+a {
+  font-size: 14px;
+}
+
+a {
+  color: #777;
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+h1 {
+  margin: 0;
+}
+
+#title {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+}
+
+#comments-container {
+  padding: 15px 20px 0 20px;
+}
+
+#no-data {
+  margin: 10px 20px;
+}
+
+.base-margin {
+  margin: 0 20px;
+}
+
+.pl-3 {
+  padding-left: 1rem;
+}
+
+.flex-row {
+  display: flex;
+}
+
+.flex-row>div {
+  display: flex;
+  align-items: center;
+}
+
+.comment {
+  margin-bottom: 15px;
+  overflow: hidden;
+  border: 1px solid #e0e0e0;
+  border-radius: 5px;
+  padding: 0;
+}
+
+.comment-header {
+  border-bottom: 1px solid #ccc;
+  background-color: #eee;
+  padding: 0.5rem 0.75rem;
+  gap: 7px;
+}
+
+.avatar-container {
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  overflow: hidden;
+  border: 1px solid #ccc;
+  border-radius: 50%;
+}
+
+.avatar {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.comment-body {
+  background-color: #fff;
+  padding: 10px;
+  border-radius: 4px;
+  font-size: 0.9em;
+}
+
+.filepath {
+  font-size: 0.9em;
+  color: #444;
+  word-break: break-all;
+  gap: 3px;
+}
+
+.diff {
+  margin: 5px 0px;
+  overflow-x: auto;
+  padding: 5px;
+  border-left: 3px solid transparent;
+  border-color: #ddd;
+  background-color: #f3f3f3;
+  color: #444;
+  font-family: Consolas, "Courier New", Courier, monospace;
+  line-height: 1.25;
+  white-space: pre;
+  word-break: normal;
+}
+
+.commenter {
+  margin-top: 10px;
+  gap: 5px;
+}
+
+.comment-text {
+  margin: 0 2em;
+  padding: 0.3em 0;
+  color: #333;
+  line-height: 1.5;
+  white-space: pre-wrap;
+}
