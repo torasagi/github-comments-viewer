@@ -12,6 +12,7 @@ a {
 a {
   color: #777;
   text-decoration: none;
+  white-space: nowrap;
 }
 
 a:hover {
@@ -19,7 +20,8 @@ a:hover {
 }
 
 h1 {
-  margin: 0;
+  margin: 0.25em 0 0.25em 0;
+  line-height: 1.2;
 }
 
 #title {
@@ -62,6 +64,7 @@ h1 {
 }
 
 .comment-header {
+  align-items: center;
   border-bottom: 1px solid #ccc;
   background-color: #eee;
   padding: 0.5rem 0.75rem;
@@ -72,6 +75,8 @@ h1 {
   display: inline-block;
   width: 20px;
   height: 20px;
+  min-width: 20px;
+  min-height: 20px;
   overflow: hidden;
   border: 1px solid #ccc;
   border-radius: 50%;
