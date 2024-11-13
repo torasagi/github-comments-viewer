@@ -1,6 +1,6 @@
 // グローバル変数、定数、キャッシュ
 let page = 1;
-const perPage = 20;
+const perPage = 30;
 const prCache = new Map();
 
 const getCommentsButton = document.getElementById('get-comments');
