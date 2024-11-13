@@ -1,6 +1,6 @@
 // グローバル変数、定数、キャッシュ
 let page = 1;
-const perPage = 30;
+const perPage = 20;
 const prCache = new Map();
 
 const getCommentsButton = document.getElementById('get-comments');
@@ -18,7 +18,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
 // 「コメント取得」ボタンのクリックイベント
 getCommentsButton.addEventListener('click', (event) => {
-  event.preventDefault();
   page = 1;
   clearComments();
   fetchComments();
@@ -45,8 +44,8 @@ async function fetchComments() {
   const repo = document.getElementById('repo').value.trim();
   const since = document.getElementById('since').value;
   const username = document.getElementById('username').value.trim();
-  const token = document.getElementById('token').value.trim();
   const excludeSelf = document.getElementById('exclude-self').checked;
+  const token = document.getElementById('token').value.trim();
 
   const url = `https://api.github.com/repos/${owner}/${repo}/pulls/comments` +
     `?since=${toUTCDateTime(since)}&page=${page}&per_page=${perPage}`;
@@ -54,10 +53,7 @@ async function fetchComments() {
   const headers = {
     'Accept': 'application/vnd.github+json',
     'X-GitHub-Api-Version': '2022-11-28',
-  };
-
-  if (token) {
-    headers['Authorization'] = `Bearer ${token}`
+    ...(token && { 'Authorization': `Bearer ${token}` })
   };
 
   enterLoading();
@@ -167,6 +163,7 @@ function createCommentDiv(comment) {
 
   result.innerHTML = `
     <div class="comment-header flex-row">
+      <!-- ヘッダー部分 -->
       <div>${prIcon}</div>
       <div><b>${pr.title}</b></div>
       <div><a href="${pr.url}" target="_blank">#${pr.number}</a></div>
@@ -176,6 +173,7 @@ function createCommentDiv(comment) {
     </div>
 
     <div class="comment-body">
+      <!--コメント本体部分 -->
       <div class="filepath flex-row">
         <div>${fileIcon}</div>
         <div>${filepath}</div>
