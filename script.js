@@ -3,57 +3,57 @@ let page = 1;
 const perPage = 30;
 const prCache = new Map();
 
-const getCommentsButton = document.getElementById('get-comments');
-const commentsDiv = document.getElementById('comments-container');
-const noDataDiv = document.getElementById('no-data');
-const getMoreButton = document.getElementById('get-more');
+const getCommentsButton = document.getElementById("get-comments");
+const commentsDiv = document.getElementById("comments-container");
+const noDataDiv = document.getElementById("no-data");
+const getMoreButton = document.getElementById("get-more");
 
 // 初期値の設定
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener("DOMContentLoaded", () => {
   const monthsAgo = new Date();
   monthsAgo.setMonth(monthsAgo.getMonth() - 3);
-  const since = monthsAgo.toISOString().split('T')[0];
-  document.getElementById('since').value = since;
+  const since = monthsAgo.toISOString().split("T")[0];
+  document.getElementById("since").value = since;
 });
 
 // 「コメント取得」ボタンのクリックイベント
-getCommentsButton.addEventListener('click', (event) => {
+getCommentsButton.addEventListener("click", (event) => {
   page = 1;
   clearComments();
   fetchComments();
 });
 
 // 「さらに取得」ボタンのクリックイベント
-getMoreButton.addEventListener('click', () => {
+getMoreButton.addEventListener("click", () => {
   page++;
   fetchComments();
 });
 
 // コメントをクリアする関数
 function clearComments() {
-  commentsDiv.innerHTML = '';
-  commentsDiv.style.display = 'none';
-  noDataDiv.style.display = 'none';
-  getMoreButton.style.display = 'none';
+  commentsDiv.innerHTML = "";
+  commentsDiv.style.display = "none";
+  noDataDiv.style.display = "none";
+  getMoreButton.style.display = "none";
 }
 
 // コメントを取得してレンダリングする関数
 async function fetchComments() {
   // フォームの入力値を取得
-  const owner = document.getElementById('owner').value.trim();
-  const repo = document.getElementById('repo').value.trim();
-  const since = document.getElementById('since').value;
-  const username = document.getElementById('username').value.trim();
-  const excludeSelf = document.getElementById('exclude-self').checked;
-  const token = document.getElementById('token').value.trim();
+  const owner = document.getElementById("owner").value.trim();
+  const repo = document.getElementById("repo").value.trim();
+  const since = document.getElementById("since").value;
+  const username = document.getElementById("username").value.trim();
+  const excludeSelf = document.getElementById("exclude-self").checked;
+  const token = document.getElementById("token").value.trim();
 
   const url = `https://api.github.com/repos/${owner}/${repo}/pulls/comments` +
     `?since=${toUTCDateTime(since)}&page=${page}&per_page=${perPage}`;
 
   const headers = {
-    'Accept': 'application/vnd.github+json',
-    'X-GitHub-Api-Version': '2022-11-28',
-    ...(token && { 'Authorization': `Bearer ${token}` })
+    Accept: "application/vnd.github+json",
+    "X-GitHub-Api-Version": "2022-11-28",
+    ...(token && { Authorization: `Bearer ${token}` }),
   };
 
   enterLoading();
@@ -83,21 +83,20 @@ async function fetchComments() {
       // HTMLにレンダリングする
       renderComments(filteredComments);
       noDataDiv.textContent = "";
-      noDataDiv.style.display = 'none';
+      noDataDiv.style.display = "none";
     } else {
       // 「該当データなし」を表示
       noDataDiv.textContent = `${page}ページ目: 該当データなし`;
-      noDataDiv.style.display = 'block';
+      noDataDiv.style.display = "block";
     }
 
     // 「さらに取得」ボタンの表示・非表示を制御
     if (data.length === perPage) {
       getMoreButton.textContent = `さらに取得 (${page + 1}ページ目)`;
-      getMoreButton.style.display = 'block';
+      getMoreButton.style.display = "block";
     } else {
-      getMoreButton.style.display = 'none';
+      getMoreButton.style.display = "none";
     }
-
   } catch (error) {
     alert(`コメントの取得に失敗しました: ${error.message}`);
   } finally {
@@ -128,7 +127,7 @@ async function fetchPullRequest(prUrl, headers) {
       avatarURL: data.user.avatar_url,
       url: data.html_url,
       number: data.number,
-    }
+    };
     prCache.set(prUrl, result);
   } else {
     if (response.status === 404) {
@@ -145,17 +144,17 @@ async function fetchPullRequest(prUrl, headers) {
 function renderComments(comments) {
   const newCommentDivs = comments.map(it => createCommentDiv(it));
   commentsDiv.append(...newCommentDivs);
-  commentsDiv.style.display = 'block';
+  commentsDiv.style.display = "block";
 }
 
 // コメントデータを表示用のDiv要素に変換する関数
 function createCommentDiv(comment) {
-  const result = document.createElement('div');
-  result.className = 'comment';
+  const result = document.createElement("div");
+  result.className = "comment";
 
   const pr = prCache.get(comment.pull_request_url);
   const filepath = comment.path;
-  const diff = comment.diff_hunk.split('\n').slice(1).slice(-5).join('\n');
+  const diff = comment.diff_hunk.split("\n").slice(1).slice(-5).join("\n");
   const avatarURL = comment.user.avatar_url;
   const url = comment.html_url;
   const date = toJPDate(comment.created_at);
@@ -226,13 +225,13 @@ function toJPDate(isoString) {
 }
 
 function enterLoading() {
-  document.getElementById('loading').style.display = 'block';
+  document.getElementById("loading").style.display = "block";
   getCommentsButton.disabled = true;
   getMoreButton.disabled = true;
 }
 
 function exitLoading() {
-  document.getElementById('loading').style.display = 'none';
+  document.getElementById("loading").style.display = "none";
   getCommentsButton.disabled = false;
   getMoreButton.disabled = false;
 }
